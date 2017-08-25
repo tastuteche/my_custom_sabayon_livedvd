@@ -1,1 +1,25 @@
-# my_custom_sabayon_livedvd
+* my_custom_sabayon_livedvd
+a custom DVD run games, including window games.
+Sabayon Linux is shipped with the latest NVidia-drivers.
+When boot from the sabayon livedvd, the nvidia drivers get loaded on boot.
+Molecule in a nut shell builds custom ISO images.
+With molecule, Sabayon_Linux_DAILY_amd64_GNOME-dev.iso is added with steam, docker, playonlinux…
+One custom DVD, you can run games, including window games by wine.
+https://wiki.sabayon.org/index.php?title=HOWTO:_Using_Molecule_Example
+
+* expect
+ 
+* boot from ISO file
+if no DVD driver, you can boot from ISO located in your disk.
+Add lines below into your grub.cfg(sda2 /ISO/ (hd0,2), make changes accordingly).
+menuentry "sda2 Live ISO, Sabayon livedvd/molecule" {
+  insmod loopback
+  set isofile=/ISO/custom_daily_Sabayon.iso
+  loopback loop (hd0,2)${isofile}
+  linux (loop)/boot/sabayon root=/dev/ram0 init=/linuxrc isoboot=${isofile} cdroot=/dev/sda2 looptype=squashfs loop=/livecd.squashfs overlayfs
+  initrd (loop)/boot/sabayon.igz
+}
+
+
+
+
