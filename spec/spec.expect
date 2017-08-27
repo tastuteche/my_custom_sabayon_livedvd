@@ -1,0 +1,31 @@
+#!/usr/bin/expect
+set timeout 360000
+set isEnd 0
+spawn su
+expect ""
+send "/home/sabayonuser/projects/my_custom_sabayon_livedvd/spec/spec.sh\n"
+while 1 {
+	expect {
+		"Accept the license and don't ask anymore (I've read it)" {  
+			send "3\n"  
+		}
+		"generating md5 for: /home/sabayonuser/projects/my_custom_sabayon_livedvd/livedvd/molecule_/custom_daily_Sabayon.iso" {  
+			set isEnd 1
+		}
+		"All done" {  
+			if {$isEnd == 1} {
+				send "exit\n" 
+			}
+		}
+		eof   {  
+			exit  
+		}  
+        }  
+}  
+##############################################
+#>> [IsoHandler|sabayonmodif.spec] built ISO image: /home/sabayonuser/projects/my_custom_sabayon_livedvd/livedvd/molecule/custom daily Sabayon.iso
+#>> [IsoHandler|sabayonmodif.spec] generating md5 for: /home/sabayonuser/projects/my_custom_sabayon_livedvd/livedvd/molecule/custom daily Sabayon.iso
+#>> [IsoHandler|sabayonmodif.spec] executing post_run
+#>> [IsoHandler|sabayonmodif.spec] executing kill
+#>> [Runner|sabayonmodif.spec] All done
+
